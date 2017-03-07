@@ -372,7 +372,10 @@ namespace CAS_Project.Controllers
             }
             return Ok();
         }
-
+        /// <summary>
+        /// Dispose method 
+        /// </summary>
+        /// <param name="disposing"></param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && _userManager != null)
