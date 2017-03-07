@@ -38,6 +38,9 @@ namespace CAS_Project.Controllers
             AccessTokenFormat = accessTokenFormat;
         }
 
+        /// <summary>
+        /// User Manager Classes
+        /// </summary>
         public ApplicationUserManager UserManager
         {
             get
