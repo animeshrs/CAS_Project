@@ -54,7 +54,7 @@ namespace CAS_Project.Controllers
 
 
         //creating post method
-        public HttpResponseMessage Post(AldiStore aldistore)
+        public HttpResponseMessage Post([FromBody]AldiStore aldistore)
         {
             try
             {
@@ -64,6 +64,35 @@ namespace CAS_Project.Controllers
                     entities.SaveChanges();
 
                     return Request.CreateResponse(HttpStatusCode.Created, aldistore);
+                }
+            }
+            catch(Exception ex)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
+            }
+        }
+
+        public HttpResponseMessage Put(int id, [FromBody]AldiStore aldistore)
+        {
+            try
+            {
+                using (ItemEntities entities = new ItemEntities())
+                {
+                    var entity = entities.AldiStores.FirstOrDefault(ent => ent.ProductID == id);
+
+                    if (entity != null)
+                    {
+                        entity.ProductID = aldistore.ProductID;
+                        entity.ProductPrice = aldistore.ProductPrice;
+
+                        entities.SaveChanges();
+
+                        return Request.CreateResponse(HttpStatusCode.OK, entity);
+                    }
+                    else
+                    {
+                        return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Item with id = " + id + "not found to update");
+                    }
                 }
             }
             catch(Exception ex)
