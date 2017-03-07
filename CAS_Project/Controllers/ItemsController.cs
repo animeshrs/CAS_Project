@@ -45,6 +45,24 @@ namespace CAS_Project.Controllers
                     }
                 }
             }
+            catch (Exception ex)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
+            }
+        }
+
+        public HttpResponseMessage Post(AldiStore aldistore)
+        {
+            try
+            {
+                using (ItemEntities entities = new ItemEntities())
+                {
+                    entities.AldiStores.Add(aldistore);
+                    entities.SaveChanges();
+
+                    return Request.CreateResponse(HttpStatusCode.Created, aldistore);
+                }
+            }
             catch(Exception ex)
             {
                 return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
