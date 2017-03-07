@@ -33,6 +33,7 @@ namespace CAS_Project.Controllers
         public AccountController(ApplicationUserManager userManager,
             ISecureDataFormat<AuthenticationTicket> accessTokenFormat)
         {
+
             UserManager = userManager;
             AccessTokenFormat = accessTokenFormat;
         }
