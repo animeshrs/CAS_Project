@@ -78,7 +78,7 @@ namespace CAS_Project.Controllers
             {
                 using (ItemEntities entities = new ItemEntities())
                 {
-                    var entity = entities.AldiStores.FirstOrDefault(ent => ent.ProductID == id);
+                    var entity = entities.AldiStores.FirstOrDefault(ent => ent.AldiID == id);
 
                     if (entity != null)
                     {
@@ -92,6 +92,32 @@ namespace CAS_Project.Controllers
                     else
                     {
                         return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Item with id = " + id + "not found to update");
+                    }
+                }
+            }
+            catch(Exception ex)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
+            }
+        }
+
+        public HttpResponseMessage Delete(int id)
+        {
+            try
+            {
+                using (ItemEntities entities = new ItemEntities())
+                {
+                    var entity = entities.AldiStores.FirstOrDefault(ent => ent.AldiID == id);
+
+                    if (entity != null)
+                    {
+                        entities.AldiStores.Remove(entity);
+
+                        return Request.CreateResponse(HttpStatusCode.OK, entity);
+                    }
+                    else
+                    {
+                        return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Item with id = " + id + " not found to delete");
                     }
                 }
             }
