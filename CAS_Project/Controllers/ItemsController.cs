@@ -51,6 +51,8 @@ namespace CAS_Project.Controllers
             }
         }
 
+
+        //creating post method
         public HttpResponseMessage Post(AldiStore aldistore)
         {
             try
