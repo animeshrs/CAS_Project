@@ -27,6 +27,7 @@ namespace CAS_Project.Controllers
             }
         }
 
+        //added comment for getting item by id
         public HttpResponseMessage Get(int id)
         {
             try
