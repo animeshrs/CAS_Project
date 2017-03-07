@@ -1,0 +1,147 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="MarketModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AldiStore">
+          <Key>
+            <PropertyRef Name="AldiID" />
+          </Key>
+          <Property Name="AldiID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProductPrice" Type="float" />
+          <Property Name="ProductID" Type="int" />
+        </EntityType>
+        <EntityType Name="CostCutterStore">
+          <Key>
+            <PropertyRef Name="CostCutterID" />
+          </Key>
+          <Property Name="CostCutterID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProductPrice" Type="float" />
+          <Property Name="ProductID" Type="int" />
+        </EntityType>
+        <EntityType Name="Products">
+          <Key>
+            <PropertyRef Name="ProductID" />
+          </Key>
+          <Property Name="ProductID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProductName" Type="nvarchar" MaxLength="20" />
+          <Property Name="ProductWeight" Type="float" />
+        </EntityType>
+        <Function Name="getComparison" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <EntityContainer Name="MarketModelStoreContainer">
+          <EntitySet Name="AldiStore" EntityType="Self.AldiStore" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CostCutterStore" EntityType="Self.CostCutterStore" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="MarketModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="AldiStore">
+          <Key>
+            <PropertyRef Name="AldiID" />
+          </Key>
+          <Property Name="AldiID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductPrice" Type="Double" />
+          <Property Name="ProductID" Type="Int32" />
+        </EntityType>
+        <EntityType Name="CostCutterStore">
+          <Key>
+            <PropertyRef Name="CostCutterID" />
+          </Key>
+          <Property Name="CostCutterID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductPrice" Type="Double" />
+          <Property Name="ProductID" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="ProductID" />
+          </Key>
+          <Property Name="ProductID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="ProductWeight" Type="Double" />
+        </EntityType>
+        <EntityContainer Name="ItemEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="AldiStores" EntityType="Self.AldiStore" />
+          <EntitySet Name="CostCutterStores" EntityType="Self.CostCutterStore" />
+          <EntitySet Name="Products" EntityType="Self.Product" />
+          <FunctionImport Name="getComparison" ReturnType="Collection(MarketModel.getComparison_Result)" />
+        </EntityContainer>
+        <ComplexType Name="getComparison_Result">
+          <Property Type="Int32" Name="ProductID" Nullable="false" />
+          <Property Type="String" Name="Product_Name" Nullable="true" MaxLength="20" />
+          <Property Type="Double" Name="Product_Weight_in_grams" Nullable="true" />
+          <Property Type="Double" Name="Aldi_Price" Nullable="true" />
+          <Property Type="Double" Name="CostCutter_Price" Nullable="true" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="MarketModelStoreContainer" CdmEntityContainer="ItemEntities">
+          <EntitySetMapping Name="AldiStores">
+            <EntityTypeMapping TypeName="MarketModel.AldiStore">
+              <MappingFragment StoreEntitySet="AldiStore">
+                <ScalarProperty Name="AldiID" ColumnName="AldiID" />
+                <ScalarProperty Name="ProductPrice" ColumnName="ProductPrice" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CostCutterStores">
+            <EntityTypeMapping TypeName="MarketModel.CostCutterStore">
+              <MappingFragment StoreEntitySet="CostCutterStore">
+                <ScalarProperty Name="CostCutterID" ColumnName="CostCutterID" />
+                <ScalarProperty Name="ProductPrice" ColumnName="ProductPrice" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Products">
+            <EntityTypeMapping TypeName="MarketModel.Product">
+              <MappingFragment StoreEntitySet="Products">
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+                <ScalarProperty Name="ProductWeight" ColumnName="ProductWeight" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="getComparison" FunctionName="MarketModel.Store.getComparison">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MarketModel.getComparison_Result">
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="Product_Name" ColumnName="Product Name" />
+                <ScalarProperty Name="Product_Weight_in_grams" ColumnName="Product Weight in grams" />
+                <ScalarProperty Name="Aldi_Price" ColumnName="Aldi Price" />
+                <ScalarProperty Name="CostCutter_Price" ColumnName="CostCutter Price" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
