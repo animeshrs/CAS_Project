@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CAS_Project", "CAS_Project\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DbAccess", "DbAccess\DbAccess.csproj", "{F384CCCD-63F9-4D9E-80FA-B143DD930286}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CAS_Web", "CAS_Web\CAS_Web.csproj", "{59CB8361-C6CA-4A5C-BD74-CF92D7A59102}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{F384CCCD-63F9-4D9E-80FA-B143DD930286}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F384CCCD-63F9-4D9E-80FA-B143DD930286}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F384CCCD-63F9-4D9E-80FA-B143DD930286}.Release|Any CPU.Build.0 = Release|Any CPU
+		{59CB8361-C6CA-4A5C-BD74-CF92D7A59102}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{59CB8361-C6CA-4A5C-BD74-CF92D7A59102}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{59CB8361-C6CA-4A5C-BD74-CF92D7A59102}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{59CB8361-C6CA-4A5C-BD74-CF92D7A59102}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
