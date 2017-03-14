@@ -58,11 +58,11 @@ namespace CAS_Web
             //   appId: "",
             //   appSecret: "");
 
-            //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
-            //{
-            //    ClientId = "",
-            //    ClientSecret = ""
-            //});
+            app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
+            {
+                ClientId = "623182828749-nmikjcj673hevgtal98gdfjitf8qtt4g.apps.googleusercontent.com",
+                ClientSecret = "H8P_hW8dpDQktGOclM6K2Dts"
+            });
         }
     }
 }
