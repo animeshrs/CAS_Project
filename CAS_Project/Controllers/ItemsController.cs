@@ -16,7 +16,7 @@ namespace CAS_Project.Controllers
             {
                 using (ItemEntities entities = new ItemEntities())
                 {
-                    var entityList = entities.AldiStores.ToList();
+                    var entityList = entities.getComparison().ToList();
 
                     return Request.CreateResponse(HttpStatusCode.OK, entityList);
                 }
