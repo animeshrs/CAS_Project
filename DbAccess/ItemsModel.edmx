@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="MarketModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="MarketModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="AldiStore">
           <Key>
             <PropertyRef Name="AldiID" />
@@ -21,6 +21,16 @@
           <Property Name="ProductPrice" Type="float" />
           <Property Name="ProductID" Type="int" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'Market.dbo.LidlStore' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="LidlStore">
+          <Key>
+            <PropertyRef Name="LidlID" />
+          </Key>
+          <Property Name="LidlID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProductPrice" Type="float" />
+          <Property Name="ProductID" Type="int" />
+        </EntityType>
         <EntityType Name="Products">
           <Key>
             <PropertyRef Name="ProductID" />
@@ -29,14 +39,37 @@
           <Property Name="ProductName" Type="nvarchar" MaxLength="20" />
           <Property Name="ProductWeight" Type="float" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'Market.dbo.TescoStore' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="TescoStore">
+          <Key>
+            <PropertyRef Name="TescoID" />
+          </Key>
+          <Property Name="TescoID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProductPrice" Type="float" />
+          <Property Name="ProductID" Type="int" />
+        </EntityType>
         <Function Name="getComparison" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="MarketModelStoreContainer">
           <EntitySet Name="AldiStore" EntityType="Self.AldiStore" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CostCutterStore" EntityType="Self.CostCutterStore" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LidlStore" EntityType="Self.LidlStore" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [LidlStore].[LidlID] AS [LidlID], 
+    [LidlStore].[ProductPrice] AS [ProductPrice], 
+    [LidlStore].[ProductID] AS [ProductID]
+    FROM [dbo].[LidlStore] AS [LidlStore]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="TescoStore" EntityType="Self.TescoStore" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [TescoStore].[TescoID] AS [TescoID], 
+    [TescoStore].[ProductPrice] AS [ProductPrice], 
+    [TescoStore].[ProductID] AS [ProductID]
+    FROM [dbo].[TescoStore] AS [TescoStore]</DefiningQuery>
+          </EntitySet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="MarketModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -69,6 +102,8 @@
           <EntitySet Name="CostCutterStores" EntityType="Self.CostCutterStore" />
           <EntitySet Name="Products" EntityType="Self.Product" />
           <FunctionImport Name="getComparison" ReturnType="Collection(MarketModel.getComparison_Result)" />
+          <EntitySet Name="LidlStores" EntityType="MarketModel.LidlStore" />
+          <EntitySet Name="TescoStores" EntityType="MarketModel.TescoStore" />
         </EntityContainer>
         <ComplexType Name="getComparison_Result">
           <Property Type="Int32" Name="ProductID" Nullable="false" />
@@ -76,7 +111,25 @@
           <Property Type="Double" Name="Product_Weight_in_grams" Nullable="true" />
           <Property Type="Double" Name="Aldi_Price" Nullable="true" />
           <Property Type="Double" Name="CostCutter_Price" Nullable="true" />
+          <Property Type="Double" Name="LidlPrice" Nullable="true" />
+          <Property Type="Double" Name="TescoPrice" Nullable="true" />
         </ComplexType>
+        <EntityType Name="LidlStore">
+          <Key>
+            <PropertyRef Name="LidlID" />
+          </Key>
+          <Property Name="LidlID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductPrice" Type="Double" />
+          <Property Name="ProductID" Type="Int32" />
+        </EntityType>
+        <EntityType Name="TescoStore">
+          <Key>
+            <PropertyRef Name="TescoID" />
+          </Key>
+          <Property Name="TescoID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductPrice" Type="Double" />
+          <Property Name="ProductID" Type="Int32" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -118,9 +171,29 @@
                 <ScalarProperty Name="Product_Weight_in_grams" ColumnName="Product Weight in grams" />
                 <ScalarProperty Name="Aldi_Price" ColumnName="Aldi Price" />
                 <ScalarProperty Name="CostCutter_Price" ColumnName="CostCutter Price" />
+                <ScalarProperty Name="LidlPrice" ColumnName="LidlPrice" />
+                <ScalarProperty Name="TescoPrice" ColumnName="TescoPrice" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="LidlStores">
+            <EntityTypeMapping TypeName="MarketModel.LidlStore">
+              <MappingFragment StoreEntitySet="LidlStore">
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="ProductPrice" ColumnName="ProductPrice" />
+                <ScalarProperty Name="LidlID" ColumnName="LidlID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TescoStores">
+            <EntityTypeMapping TypeName="MarketModel.TescoStore">
+              <MappingFragment StoreEntitySet="TescoStore">
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="ProductPrice" ColumnName="ProductPrice" />
+                <ScalarProperty Name="TescoID" ColumnName="TescoID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

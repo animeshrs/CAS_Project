@@ -30,6 +30,8 @@ namespace DbAccess
         public virtual DbSet<AldiStore> AldiStores { get; set; }
         public virtual DbSet<CostCutterStore> CostCutterStores { get; set; }
         public virtual DbSet<Product> Products { get; set; }
+        public virtual DbSet<LidlStore> LidlStores { get; set; }
+        public virtual DbSet<TescoStore> TescoStores { get; set; }
     
         public virtual ObjectResult<getComparison_Result> getComparison()
         {
