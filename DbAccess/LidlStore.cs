@@ -10,15 +10,12 @@
 namespace DbAccess
 {
     using System;
+    using System.Collections.Generic;
     
-    public partial class getComparison_Result
+    public partial class LidlStore
     {
-        public int ProductID { get; set; }
-        public string Product_Name { get; set; }
-        public Nullable<double> Product_Weight_in_grams { get; set; }
-        public Nullable<double> Aldi_Price { get; set; }
-        public Nullable<double> CostCutter_Price { get; set; }
-        public Nullable<double> LidlPrice { get; set; }
-        public Nullable<double> TescoPrice { get; set; }
+        public int LidlID { get; set; }
+        public Nullable<double> ProductPrice { get; set; }
+        public Nullable<int> ProductID { get; set; }
     }
 }
