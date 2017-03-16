@@ -10,22 +10,22 @@ namespace CAS_Project.Controllers
 {
     public class ItemsController : ApiController
     {
-        public HttpResponseMessage Get()
-        {
-            try
-            {
-                using (ItemEntities entities = new ItemEntities())
-                {
-                    var entityList = entities.getComparison().ToList();
+        //public HttpResponseMessage Get()
+        //{
+        //    try
+        //    {
+        //        using (ItemEntities entities = new ItemEntities())
+        //        {
+        //            var entityList = entities.AldiStores.ToList();
 
-                    return Request.CreateResponse(HttpStatusCode.OK, entityList);
-                }
-            }
-            catch (Exception ex)
-            {
-                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
-            }
-        }
+        //            return Request.CreateResponse(HttpStatusCode.OK, entityList);
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
+        //    }
+        //}
 
         //added comment for getting item by id
         public HttpResponseMessage Get(string name)
@@ -122,6 +122,35 @@ namespace CAS_Project.Controllers
                 }
             }
             catch(Exception ex)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
+            }
+        }
+
+        // GET api/Items/GetComparisonList
+
+        [HttpGet]
+        public HttpResponseMessage Get()
+        {
+            try
+            {
+                using (ItemEntities entities = new ItemEntities())
+                {
+                    var entity = entities.getComparison().ToList();
+
+                    if (entity != null)
+                    {
+                        return Request.CreateResponse(HttpStatusCode.OK, entity);
+                        //return entity;
+                    }
+                    else
+                    {
+                        return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Item not found to update");
+                        //return null;
+                    }
+                }
+            }
+            catch (Exception ex)
             {
                 return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
             }
