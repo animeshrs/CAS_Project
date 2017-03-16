@@ -18,5 +18,7 @@ namespace DbAccess
         public Nullable<double> Product_Weight_in_grams { get; set; }
         public Nullable<double> Aldi_Price { get; set; }
         public Nullable<double> CostCutter_Price { get; set; }
+        public Nullable<double> LidlPrice { get; set; }
+        public Nullable<double> TescoPrice { get; set; }
     }
 }

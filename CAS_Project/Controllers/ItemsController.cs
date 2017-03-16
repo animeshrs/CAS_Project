@@ -28,13 +28,13 @@ namespace CAS_Project.Controllers
         //}
 
         //added comment for getting item by id
-        public HttpResponseMessage Get(int id)
+        public HttpResponseMessage Get(string name)
         {
             try
             {
                 using (ItemEntities entities = new ItemEntities())
                 {
-                    var entity = entities.AldiStores.FirstOrDefault(x => x.AldiID == id);
+                    var entity = entities.getComparison().Where(x => x.Product_Name.ToLower() == name.ToLower()).ToList();                   
 
                     if (entity != null)
                     {
@@ -42,7 +42,7 @@ namespace CAS_Project.Controllers
                     }
                     else
                     {
-                        return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Item with id = " + id + " is not found");
+                        return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Item with name = " + name + " is not found");
                     }
                 }
             }

@@ -111,6 +111,8 @@ warning 6002: The table/view 'Market.dbo.TescoStore' does not have a primary key
           <Property Type="Double" Name="Product_Weight_in_grams" Nullable="true" />
           <Property Type="Double" Name="Aldi_Price" Nullable="true" />
           <Property Type="Double" Name="CostCutter_Price" Nullable="true" />
+          <Property Type="Double" Name="LidlPrice" Nullable="true" />
+          <Property Type="Double" Name="TescoPrice" Nullable="true" />
         </ComplexType>
         <EntityType Name="LidlStore">
           <Key>
@@ -169,6 +171,8 @@ warning 6002: The table/view 'Market.dbo.TescoStore' does not have a primary key
                 <ScalarProperty Name="Product_Weight_in_grams" ColumnName="Product Weight in grams" />
                 <ScalarProperty Name="Aldi_Price" ColumnName="Aldi Price" />
                 <ScalarProperty Name="CostCutter_Price" ColumnName="CostCutter Price" />
+                <ScalarProperty Name="LidlPrice" ColumnName="LidlPrice" />
+                <ScalarProperty Name="TescoPrice" ColumnName="TescoPrice" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
