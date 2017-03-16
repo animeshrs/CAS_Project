@@ -8,6 +8,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DbAccess", "DbAccess\DbAccess.csproj", "{F384CCCD-63F9-4D9E-80FA-B143DD930286}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CAS_Web", "CAS_Web\CAS_Web.csproj", "{59CB8361-C6CA-4A5C-BD74-CF92D7A59102}"
+	ProjectSection(ProjectDependencies) = postProject
+		{84FAAA52-80C1-4523-A90B-742BD431E854} = {84FAAA52-80C1-4523-A90B-742BD431E854}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
