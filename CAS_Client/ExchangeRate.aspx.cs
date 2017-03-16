@@ -16,8 +16,17 @@ namespace CAS_Client
 
         protected void btnSubmit_Click(object sender, EventArgs e)
         {
-            ExchangeRateServiceReference.ExchangeRateServiceSoapClient client = new ExchangeRateServiceReference.ExchangeRateServiceSoapClient();
-            lblResult.Text = client.ExchangeRate(txtFromCurrency.Text, txtToCurrency.Text, Convert.ToDecimal(txtAmount.Text));            
+            try
+            {
+                lblResult.ForeColor = System.Drawing.Color.DarkBlue;
+                ExchangeRateServiceReference.ExchangeRateServiceSoapClient client = new ExchangeRateServiceReference.ExchangeRateServiceSoapClient();
+                lblResult.Text = client.ExchangeRate(txtFromCurrency.Text, txtToCurrency.Text, Convert.ToDecimal(txtAmount.Text));
+            }
+            catch(Exception ex)
+            {
+                lblResult.ForeColor = System.Drawing.Color.Red;
+                lblResult.Text = ex.Message;
+            }
         }
     }
 }
