@@ -247,7 +247,7 @@
 
         function getProductDetailsByCurrency(currencyRate) {
             $('#ProductList').empty();
-            $('#ProductList').append($('<div class="row" style="border: 1px solid #c9c9f5"><div class="col-lg-3"><strong>Product</strong></div><div class="col-lg-3"><strong>Weight (in gm)</strong></div><div class="col-lg-3"><strong>Aldi Price</strong></div><div class="col-lg-3"><strong>Cost Cutter Price</strong></div></div>' + '<div class="row" style="border: 1px solid #c9c9f5" ><div class="col-lg-3">'));
+            $('#ProductList').append($('<div class="row" style="border: 1px solid #c9c9f5"><div class="col-lg-2"><strong>Product</strong></div><div class="col-lg-2"><strong>Weight (in gm)</strong></div><div class="col-lg-2"><strong>Aldi Price</strong></div><div class="col-lg-2"><strong>Cost Cutter Price</strong></div><div class="col-lg-2"><strong>Lidl Price</strong></div><div class="col-lg-2"><strong>Tesco Price</strong></div></div>' + '<div class="row" style="border: 1px solid #c9c9f5" ><div class="col-lg-3">'));
 
             $.ajax
            ({
@@ -261,11 +261,13 @@
                success: function (data) {
                    $.each(data, function (index, element) {
 
-                       $('#ProductList').append($('<div class="row" style="border: 1px solid #c9c9f5" ><div class="col-lg-3">' +
-                           element.Product_Name + '</div>' + '<div class="col-lg-3">' +
-                           element.Product_Weight_in_grams + '</div>' + '<div class="col-lg-3">' +
-                           (parseInt(element.Aldi_Price)*currencyRate).toFixed(2) + '</div>' + '<div class="col-lg-3">' +
-                           (parseInt(element.CostCutter_Price)*currencyRate).toFixed(2) + '</div></div>'));
+                       $('#ProductList').append($('<div class="row" style="border: 1px solid #c9c9f5" ><div class="col-lg-2">' +
+                           element.Product_Name + '</div>' + '<div class="col-lg-2">' +
+                           element.Product_Weight_in_grams + '</div>' + '<div class="col-lg-2">' +
+                           (parseInt(element.Aldi_Price)*currencyRate).toFixed(2) + '</div>' + '<div class="col-lg-2">' +
+                           (parseInt(element.CostCutter_Price) * currencyRate).toFixed(2) + '</div>' + '<div class="col-lg-2">' +
+                           (parseInt(element.LidlPrice) * currencyRate).toFixed(2) + '</div>' +                           '<div class="col-lg-2">' +
+                           (parseInt(element.TescoPrice) * currencyRate).toFixed(2) + '</div>' + '</div>'));
                    });
 
                    //$("#ProductList").load(" #ProductList");
