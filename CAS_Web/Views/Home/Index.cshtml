@@ -201,18 +201,62 @@
 
     $(document).ready()
     {
-        alert("Loading Cost Comparison grid when document loads completely. Click OK to continue.");
+       // alert("Loading Cost Comparison grid when document loads completely. Click OK to continue.");
 
         getProductDetailsByCurrency(1);
 
         $("#CurrencySelect").change(function() {
             
             var valueCurrency = $('#CurrencySelect').find(":selected").val();
+            var searchItemValue = $.trim($("#SearchItem").val());
 
-            InfoByDate(valueCurrency);
+
+            InfoByCurr(valueCurrency,searchItemValue);
         });
         
-        function InfoByDate(toCurrency) {
+        $("#SearchButton").click(function () {
+
+            var searchItemValue =$.trim($("#SearchItem").val());
+            //alert(searchItemValue);
+            if (searchItemValue != "") {
+                getProductDetailsByFilter(searchItemValue);
+            }
+
+        });
+
+        //function InfoByCurr(toCurrency) {
+        //    var divToBeWorkedOn = "#AjaxPlaceHolder";
+        //    var webMethod = "https://localhost:44317/api/ExchangeRate?";
+        //    var parameters = "amountString=1&fromCurrency=EUR&toCurrency=" + toCurrency;
+        //    var urlWebApi = webMethod + parameters;
+
+        //    //alert(toCurrency);
+        //    if (toCurrency != "EUR") {
+        //        $.ajax({
+        //            type: "GET",
+        //            url: urlWebApi,
+        //            //data: parameters,
+        //            contentType: "application/json; charset=utf-8",
+        //            dataType: "json",
+        //            success: function (msg) {
+        //                //$.each(msg, function (index, element) {
+        //                var conversionValue = msg.split(" ")[0];
+        //                //alert(conversionValue);
+        //                getProductDetailsByCurrency(conversionValue);
+        //                //});
+
+        //            },
+        //            error: function (e) {
+
+        //                alert("Failed to get Exchange Rates, Please ensure service is up and running!!");
+        //            }
+        //        });
+        //    } else {
+        //        getProductDetailsByCurrency(1);
+        //    }
+        //}
+        
+        function InfoByCurr(toCurrency, searchItemValue) {
             var divToBeWorkedOn = "#AjaxPlaceHolder";
             var webMethod = "https://localhost:44317/api/ExchangeRate?";
             var parameters = "amountString=1&fromCurrency=EUR&toCurrency=" + toCurrency;
@@ -230,8 +274,12 @@
                         //$.each(msg, function (index, element) {
                         var conversionValue = msg.split(" ")[0];
                         //alert(conversionValue);
-                        getProductDetailsByCurrency(conversionValue);
-                        //});
+                        if (searchItemValue != null && $.trim(searchItemValue) != "") {
+                            getProductDetailsByCurrencySearchValue(conversionValue, searchItemValue);
+                        } else {
+                            getProductDetailsByCurrency(conversionValue);
+
+                        };
 
                     },
                     error: function (e) {
@@ -240,12 +288,17 @@
                     }
                 });
             } else {
-                getProductDetailsByCurrency(1);
+                if (searchItemValue != null && $.trim(searchItemValue) != "") {
+
+                    getProductDetailsByCurrencySearchValue(1, searchItemValue);
+                } else {
+                    getProductDetailsByCurrency(1);
+                }
             }
         }
-
-
-        function getProductDetailsByCurrency(currencyRate) {
+        
+        function getProductDetailsByCurrency(currencyRate)
+        {
             $('#ProductList').empty();
             $('#ProductList').append($('<div class="row" style="border: 1px solid #c9c9f5"><div class="col-lg-2"><strong>Product</strong></div><div class="col-lg-2"><strong>Weight (in gm)</strong></div><div class="col-lg-2"><strong>Aldi Price</strong></div><div class="col-lg-2"><strong>Cost Cutter Price</strong></div><div class="col-lg-2"><strong>Lidl Price</strong></div><div class="col-lg-2"><strong>Tesco Price</strong></div></div>' + '<div class="row" style="border: 1px solid #c9c9f5" ><div class="col-lg-3">'));
 
@@ -254,9 +307,7 @@
                type: "GET",
                url: "https://localhost:44317/api/Items",
                dataType: 'json',
-               async: false,
-               username: 'rocky@gmail.com',
-               password: 'Qwerty@123',
+               async: false,               
                data: '',
                success: function (data) {
                    $.each(data, function (index, element) {
@@ -278,10 +329,50 @@
 
 
         }
-        
-        
+
+        function getProductDetailsByCurrencySearchValue(currencyRate,searchValue) {
+            $('#ProductList').empty();
+            $('#ProductList').append($('<div class="row" style="border: 1px solid #c9c9f5"><div class="col-lg-2"><strong>Product</strong></div><div class="col-lg-2"><strong>Weight (in gm)</strong></div><div class="col-lg-2"><strong>Aldi Price</strong></div><div class="col-lg-2"><strong>Cost Cutter Price</strong></div><div class="col-lg-2"><strong>Lidl Price</strong></div><div class="col-lg-2"><strong>Tesco Price</strong></div></div>' + '<div class="row" style="border: 1px solid #c9c9f5" ><div class="col-lg-3">'));
+            if (searchValue == null) {
+                searchValue = "";
+            }
+            var serviceUrl = "https://localhost:44317/api/Items?name=" + searchValue;
+            alert(serviceUrl);
+            $.ajax
+           ({
+               type: "GET",
+               url: serviceUrl,
+               dataType: 'json',
+               async: false,              
+               data: '',
+               success: function (data) {
+                   $.each(data, function (index, element) {
+
+                       $('#ProductList').append($('<div class="row" style="border: 1px solid #c9c9f5" ><div class="col-lg-2">' +
+                           element.Product_Name + '</div>' + '<div class="col-lg-2">' +
+                           element.Product_Weight_in_grams + '</div>' + '<div class="col-lg-2">' +
+                           (parseInt(element.Aldi_Price) * currencyRate).toFixed(2) + '</div>' + '<div class="col-lg-2">' +
+                           (parseInt(element.CostCutter_Price) * currencyRate).toFixed(2) + '</div>' + '<div class="col-lg-2">' +
+                           (parseInt(element.LidlPrice) * currencyRate).toFixed(2) + '</div>' + '<div class="col-lg-2">' +
+                           (parseInt(element.TescoPrice) * currencyRate).toFixed(2) + '</div>' + '</div>'));
+                   });
+
+                   //$("#ProductList").load(" #ProductList");
+
+               }
+           });
 
 
+
+        }
+
+        function getProductDetailsByFilter(searchItemValue)
+        {
+            var currency = $('#CurrencySelect').find(":selected").val();
+            InfoByCurr(currency, searchItemValue);
+
+        }
+                
     }
 
 

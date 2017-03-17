@@ -8,6 +8,7 @@ using DbAccess;
 
 namespace CAS_Project.Controllers
 {
+    [AllowAnonymous]
     public class ItemsController : ApiController
     {
         //public HttpResponseMessage Get()
@@ -34,7 +35,7 @@ namespace CAS_Project.Controllers
             {
                 using (ItemEntities entities = new ItemEntities())
                 {
-                    var entity = entities.getComparison().Where(x => x.Product_Name.ToLower() == name.ToLower()).ToList();                   
+                    var entity = entities.getComparison().Where(x => x.Product_Name.ToLower().Contains(name.ToLower())).ToList();                   
 
                     if (entity != null)
                     {
