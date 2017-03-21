@@ -24,10 +24,10 @@
     <script src="Scripts/jquery-3.1.1.min.js"></script>
 
     <script type="text/javascript">
-        $(document).ready(function () {
-            if (sessionStorage.getItem('accessID') == null)
-                window.location.href = "Login.html";
-        });
+        //$(document).ready(function () {
+        //    if (sessionStorage.getItem('accessID') == null)
+        //        window.location.href = "Login.html";
+        //});
         $('#btnLogout').click(function () {
             sessionStorage.removeItem('accessID');
             window.location.href = "Login.html";
