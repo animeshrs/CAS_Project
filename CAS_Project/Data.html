@@ -1,0 +1,37 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta charset="utf-8" />
+    <link href="Content/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body style="padding-top:20px">
+    <div class="col-md-10 col-md-offset-1">
+        <div class="well">
+            <table>
+                <tr>
+                    <td>
+                        Here, data table will be included!!!
+                    </td>
+                    <td>
+                        <input id="btnLogout" class="btn btn-success pull-right" type="button" value="Logout" />
+                    </td>                    
+                </tr>
+            </table>            
+        </div>
+    </div>
+    <script src="Scripts/bootstrap.min.js"></script>
+    <script src="Scripts/jquery-3.1.1.min.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            if (sessionStorage.getItem('accessID') == null)
+                window.location.href = "Login.html";
+        });
+        $('#btnLogout').click(function () {
+            sessionStorage.removeItem('accessID');
+            window.location.href = "Login.html";
+        });
+    </script>
+</body>
+</html>
