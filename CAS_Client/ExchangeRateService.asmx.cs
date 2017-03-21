@@ -10,7 +10,7 @@ using System.Xml;
 
 namespace CAS_Client
 {
-    /// <summary>
+    
     /// Summary description for ExchangeRateService
     /// </summary>
     [WebService(Namespace = "http://tempuri.org/")]
