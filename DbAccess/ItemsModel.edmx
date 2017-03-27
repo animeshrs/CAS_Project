@@ -54,19 +54,10 @@ warning 6002: The table/view 'Market.dbo.TescoStore' does not have a primary key
           <EntitySet Name="AldiStore" EntityType="Self.AldiStore" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CostCutterStore" EntityType="Self.CostCutterStore" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="LidlStore" EntityType="Self.LidlStore" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [LidlStore].[LidlID] AS [LidlID], 
-    [LidlStore].[ProductPrice] AS [ProductPrice], 
-    [LidlStore].[ProductID] AS [ProductID]
-    FROM [dbo].[LidlStore] AS [LidlStore]</DefiningQuery>
+          <EntitySet Name="LidlStore" EntityType="Self.LidlStore" store:Type="Tables" Schema="dbo">            
           </EntitySet>
-          <EntitySet Name="TescoStore" EntityType="Self.TescoStore" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [TescoStore].[TescoID] AS [TescoID], 
-    [TescoStore].[ProductPrice] AS [ProductPrice], 
-    [TescoStore].[ProductID] AS [ProductID]
-    FROM [dbo].[TescoStore] AS [TescoStore]</DefiningQuery>
+          <EntitySet Name="TescoStore" EntityType="Self.TescoStore" store:Type="Tables" Schema="dbo">
+            
           </EntitySet>
         </EntityContainer>
       </Schema></edmx:StorageModels>

@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using DbAccess;
+using System.Web.Http.Cors;
 
 namespace CAS_Project.Controllers
 {

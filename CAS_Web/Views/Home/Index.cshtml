@@ -312,13 +312,13 @@
         {
             $('#ProductList').empty();
             $('#ProductList').append($('<div class="row" style="border: 1px solid #c9c9f5"><div class="col-lg-2"><strong>Product</strong></div><div class="col-lg-2"><strong>Weight (in gm)</strong></div><div class="col-lg-2"><strong>Aldi Price</strong></div><div class="col-lg-2"><strong>Cost Cutter Price</strong></div><div class="col-lg-2"><strong>Lidl Price</strong></div><div class="col-lg-2"><strong>Tesco Price</strong></div></div>' + '<div class="row" style="border: 1px solid #c9c9f5" ><div class="col-lg-3">'));
-
+            //alert('calling');
             $.ajax
            ({
                type: "GET",
                url: "https://localhost:44317/api/Items",
                dataType: 'json',
-               async: false,               
+               async: true,               
                data: '',
                success: function (data) {
                    $.each(data, function (index, element) {
@@ -354,7 +354,7 @@
                type: "GET",
                url: serviceUrl,
                dataType: 'json',
-               async: false,              
+               async: true,              
                data: '',
                success: function (data) {
                    $.each(data, function (index, element) {

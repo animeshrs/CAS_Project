@@ -1,0 +1,160 @@
+﻿
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div style="height:100px">
+    
+</div>
+
+<div style="height:500px">
+    <div class="col-lg-4 text-right">
+
+        Product:
+    </div>
+    <div class="col-lg-3 text-left">
+        <select id="productList" class="form-control">
+            <option value="">Select a product</option>
+        </select>
+    </div>
+    <div class="col-lg-5 text-left">
+        <button id="DeleteProduct" class="btn btn-primary" value="DeleteProduct">Delete</button>
+    </div>
+</div>
+
+<div id="myModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color: #337ab7; ">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title" style="color:white">Information</h4>
+            </div>
+            <div class="modal-body" style="color:black">
+                <p id="ResultMessage"></p>
+            </div>
+            @*<div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>*@
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+<script type="text/javascript">
+
+    $(document).ready()
+    {
+       // alert("Loading Cost Comparison grid when document loads completely. Click OK to continue.");
+        LoadProducts();
+
+        $("#DeleteProduct").click(function () {
+
+            var productItem = $('#productList').find(":selected").val();
+            //alert(searchItemValue);
+            if (productItem != "") {
+                deleteProduct(productItem);
+            }
+
+        });
+
+
+        function CallWebApi() {
+
+            var serviceUrl = "https://localhost:44317/api/Admin";
+            //alert(serviceUrl);
+            $.ajax
+           ({
+               type: "GET",
+               url: serviceUrl,
+               dataType: 'json',
+               async: true,
+               data: '',
+               success: function (data) {
+                   //alert("ss");
+                  
+               }
+           });
+            //alert("Data is successfully Deleted!!");
+            $("#ResultMessage").text("Data is successfully Deleted!!");
+            $('#myModal').modal('show');
+            setTimeout(LoadProducts, 10000);
+        }
+
+
+
+
+        function LoadProducts() {
+            $('#productList').empty();
+            $('#productList').append($('<option value="">Select a product</option>'));
+
+            var serviceUrl = "https://localhost:44317/api/Items";
+            //alert(serviceUrl);
+            $.ajax
+           ({
+               type: "GET",
+               url: serviceUrl,
+               dataType: 'json',
+               async: true,
+               data: '',
+               success: function (data) {
+                   $.each(data, function (index, element) {
+
+                       $('#productList').append($('<option value="' + element.ProductID + '">' + element.Product_Name + "--"
+                           + element.Product_Weight_in_grams + '</option>'));
+                   });
+
+                   //$("#ProductList").load(" #ProductList");
+
+               }
+           });
+
+
+
+        }
+
+
+
+        function deleteProduct(productId) {
+            
+            var serviceUrl = "https://localhost:44332/Home/Delete?productId=" + productId;
+            //alert(serviceUrl);
+            $.ajax
+           ({
+               type: "POST",
+               url: serviceUrl,
+               dataType: 'json',
+               async: true,
+               data: '',
+               success: function (data) {
+                   alert("Data has been queued for deletion!!");
+                   //$("#ResultMessage").text("Data has been queued for deletion!!");
+                   //$('#myModal').modal('show');
+                   setTimeout(CallWebApi, 1000);
+                   //setTimeout(LoadProducts, 15000);
+
+                   //window.setTimeout(function () {
+                   //    CallWebApi();
+                   //    // do whatever you want to do   
+                       
+                   //}, 10000);
+                   //window.setTimeout(function () {
+                   //    LoadProducts().delay();
+                   //    // do whatever you want to do   
+
+                   //}, 1500);
+                   
+
+               }
+           });
+            
+        }
+
+
+    }
+
+
+
+</script>
